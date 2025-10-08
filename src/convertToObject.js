@@ -6,14 +6,25 @@
  * @return {object}
  */
 function convertToObject(sourceString) {
-  const arr = sourceString.split(';');
+  const lines = sourceString.split(';');
 
-  return arr.reduce((prev, line) => {
+  return lines.reduce((prev, line) => {
     if (line.trim().length === 0) {
       return prev;
     }
 
-    const [key, value] = line.split(':');
+    const parts = line.split(':');
+
+    if (parts.length < 2) {
+      return prev;
+    }
+
+    const [key, value] = parts;
+
+    if (!key || !value) {
+      return prev;
+    }
+
     const keyTrimed = key.trim();
     const valueTrimed = value.trim();
 
