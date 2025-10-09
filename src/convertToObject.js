@@ -8,34 +8,32 @@
 function convertToObject(sourceString) {
   const lines = sourceString.split(';');
 
-  return lines.reduce((prev, line) => {
+  return lines.reduce((accumulator, line) => {
     if (line.trim().length === 0) {
-      return prev;
+      return accumulator;
     }
 
     const parts = line.split(':');
 
     if (parts.length < 2) {
-      return prev;
+      return accumulator;
     }
 
     const [key, value] = parts;
 
     if (!key || !value) {
-      return prev;
+      return accumulator;
     }
 
-    const keyTrimed = key.trim();
-    const valueTrimed = value.trim();
+    const keyTrimmed = key.trim();
+    const valueTrimmed = value.trim();
 
-    if (!keyTrimed || !valueTrimed) {
-      return prev;
+    if (!keyTrimmed || !valueTrimmed) {
+      return accumulator;
     }
+    accumulator[keyTrimmed] = valueTrimmed;
 
-    return {
-      ...prev,
-      [keyTrimed]: valueTrimed,
-    };
+    return accumulator;
   }, {});
 }
 
